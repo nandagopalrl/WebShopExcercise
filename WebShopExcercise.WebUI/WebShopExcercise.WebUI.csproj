@@ -186,13 +186,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleConfig2.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\FilterConfig2.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\RouteConfig2.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProductManagerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -297,6 +301,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ProductManager\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -308,6 +313,24 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebShopExcercise.Core\WebShopExcercise.Core.csproj">
+      <Project>{75c4c34f-e8d8-410f-8ce5-3d2b929df0a8}</Project>
+      <Name>WebShopExcercise.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebShopExcercise.DataAccess.InMemory\WebShopExcercise.DataAccess.InMemory.csproj">
+      <Project>{23cef153-3296-41a3-ad7b-7e37f1155227}</Project>
+      <Name>WebShopExcercise.DataAccess.InMemory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebShopExcercise.DataAccess.SQL\WebShopExcercise.DataAccess.SQL.csproj">
+      <Project>{ca88a71c-914a-45e1-9074-fb1b88c485ae}</Project>
+      <Name>WebShopExcercise.DataAccess.SQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebShopExcercise.Services\WebShopExcercise.Services.csproj">
+      <Project>{7fd0bc5a-3446-4dc3-a0af-32813e823c42}</Project>
+      <Name>WebShopExcercise.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
