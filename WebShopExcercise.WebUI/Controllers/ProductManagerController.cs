@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebShopExcercise.Core.Contracts;
 using WebShopExcercise.Core.Models;
 using WebShopExcercise.Core.ViewModels;
-using WebShopExcercise.DataAccess.InMemory;
 
 
 namespace WebShopExcercise.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        InMemoryRepository<Product> context;
-        InMemoryRepository<ProductCategory> productCategoryRepository;
+        IRepository<Product> context;
+        IRepository<ProductCategory> productCategoryRepository;
 
-        public ProductManagerController()
+        public ProductManagerController(IRepository<Product> productContext, IRepository<ProductCategory> productCategoryContext)
         {
-            context = new InMemoryRepository<Product>();
-            productCategoryRepository = new InMemoryRepository<ProductCategory>();
+            context = productContext;
+            productCategoryRepository = productCategoryContext;
 
         }
 
