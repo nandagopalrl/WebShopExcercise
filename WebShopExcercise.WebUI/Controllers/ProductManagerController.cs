@@ -12,12 +12,14 @@ namespace WebShopExcercise.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        ProductRepository context;
-        ProductCategoryRepository productCategoryRepository;
+        InMemoryRepository<Product> context;
+        InMemoryRepository<ProductCategory> productCategoryRepository;
 
         public ProductManagerController()
         {
-            context = new ProductRepository();
+            context = new InMemoryRepository<Product>();
+            productCategoryRepository = new InMemoryRepository<ProductCategory>();
+
         }
 
         // GET: ProductManager
@@ -30,7 +32,6 @@ namespace WebShopExcercise.WebUI.Controllers
         public ActionResult Create()
         {
             ProductManagerViewModel viewModel = new ProductManagerViewModel();
-            productCategoryRepository = new ProductCategoryRepository();
             viewModel.product = new Product();
             viewModel.ProductCategories = productCategoryRepository.Collection();
             return View(viewModel);
@@ -63,7 +64,6 @@ namespace WebShopExcercise.WebUI.Controllers
             else
             {
                 ProductManagerViewModel viewModel = new ProductManagerViewModel();
-                productCategoryRepository = new ProductCategoryRepository();
                 viewModel.product = product;
                 viewModel.ProductCategories = productCategoryRepository.Collection();
                 return View(viewModel);
