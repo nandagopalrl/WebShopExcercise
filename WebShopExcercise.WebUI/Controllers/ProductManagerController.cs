@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebShopExcercise.Core.Models;
+using WebShopExcercise.Core.ViewModels;
 using WebShopExcercise.DataAccess.InMemory;
 
 
@@ -12,6 +13,7 @@ namespace WebShopExcercise.WebUI.Controllers
     public class ProductManagerController : Controller
     {
         ProductRepository context;
+        ProductCategoryRepository productCategoryRepository;
 
         public ProductManagerController()
         {
@@ -27,8 +29,11 @@ namespace WebShopExcercise.WebUI.Controllers
 
         public ActionResult Create()
         {
-            Product product = new Product();
-            return View(product);
+            ProductManagerViewModel viewModel = new ProductManagerViewModel();
+            productCategoryRepository = new ProductCategoryRepository();
+            viewModel.product = new Product();
+            viewModel.ProductCategories = productCategoryRepository.Collection();
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -57,7 +62,11 @@ namespace WebShopExcercise.WebUI.Controllers
             }
             else
             {
-                return View(product);
+                ProductManagerViewModel viewModel = new ProductManagerViewModel();
+                productCategoryRepository = new ProductCategoryRepository();
+                viewModel.product = product;
+                viewModel.ProductCategories = productCategoryRepository.Collection();
+                return View(viewModel);
             }
         }
 
