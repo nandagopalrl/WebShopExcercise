@@ -15,7 +15,7 @@ namespace WebShopExcercise.WebUI.Controllers
         IRepository<Product> context;
         IRepository<ProductCategory> productCategoryRepository;
 
-        public ProductManagerController(IRepository<Product> productContext, IRepository<ProductCategory> productCategoryContext)
+        public ProductManagerController(IRepository<Product> productContext, IRepository<ProductCategory> productCategoryContext) // these are injected by the dependency injection class. check Unity.config
         {
             context = productContext;
             productCategoryRepository = productCategoryContext;
