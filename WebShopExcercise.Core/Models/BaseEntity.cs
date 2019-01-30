@@ -8,8 +8,8 @@ namespace WebShopExcercise.Core.Models
 {
     public abstract class BaseEntity
     {
-        public string Id { get;}
-        public DateTimeOffset CreatedAt { get;}
+        public string Id { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         public BaseEntity()
         {
