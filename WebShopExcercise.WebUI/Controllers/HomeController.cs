@@ -29,7 +29,7 @@ namespace WebShopExcercise.WebUI.Controllers
         {
             Product product = context.Find(id);
 
-            if(product != null)
+            if(product == null)
             {
                 return HttpNotFound();
             }
