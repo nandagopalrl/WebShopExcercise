@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -37,8 +38,8 @@ namespace WebShopExcercise.WebUI.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
-        public ActionResult Create(Product product)
+        [HttpPost]  //https://www.aurigma.com/upload-suite/developers/aspnet-mvc/how-to-upload-files-in-aspnet-mvc  : further reading
+        public ActionResult Create(Product product, HttpPostedFileBase file)
         {
             if (!ModelState.IsValid)
             {
@@ -46,6 +47,28 @@ namespace WebShopExcercise.WebUI.Controllers
             }
             else
             {
+                //if(file != null)
+                //{
+                //    product.Image = product.Id + Path.GetExtension(file.FileName);
+                //    file.SaveAs(Server.MapPath("//Content//ProductImages") + product.Image); 
+                //}
+                if (HttpContext.Request.Files.AllKeys.Any())
+                {
+                    // Get the uploaded image from the Files collection
+                    var httpPostedFile = HttpContext.Request.Files[0];
+
+                    if (httpPostedFile != null)
+                    {
+                        // Validate the uploaded image(optional)
+
+                        // Get the complete file path
+                        product.Image = product.Id + Path.GetExtension(file.FileName);
+
+                        // Save the uploaded file to "UploadedFiles" folder
+                        httpPostedFile.SaveAs(Server.MapPath("//Content//ProductImages//") + product.Image);
+                    }
+                }
+
                 context.Insert(product);
                 context.Commit();
 
@@ -71,7 +94,7 @@ namespace WebShopExcercise.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product, string Id)
+        public ActionResult Edit(Product product, string Id, HttpPostedFileBase file)
         {
             Product productToEdit = context.Find(Id);
 
@@ -87,9 +110,30 @@ namespace WebShopExcercise.WebUI.Controllers
                 }
                 else
                 {
+                    //if (file != null)
+                    //{
+                    //    product.Image = product.Id + Path.GetExtension(file.FileName);
+                    //    file.SaveAs(Server.MapPath("//Content//ProductImages") + product.Image);
+                    //}
+                    if (HttpContext.Request.Files.AllKeys.Any())
+                    {
+                        // Get the uploaded image from the Files collection
+                        var httpPostedFile = HttpContext.Request.Files[0];
+
+                        if (httpPostedFile != null)
+                        {
+                            // Validate the uploaded image(optional)
+
+                            // Get the complete file path
+                            productToEdit.Image = product.Id + Path.GetExtension(file.FileName);
+
+                            // Save the uploaded file to "UploadedFiles" folder
+                            httpPostedFile.SaveAs(Server.MapPath("//Content//ProductImages//") + productToEdit.Image);
+                        }
+                    }
+
                     productToEdit.Category = product.Category;
                     productToEdit.Description = product.Description;
-                    productToEdit.Image = product.Image;
                     productToEdit.Name = product.Name;
                     productToEdit.Price = product.Price;
 
