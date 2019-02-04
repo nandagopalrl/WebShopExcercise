@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System.Web;
 using WebShopExcercise.Core.Contracts;
 using WebShopExcercise.Core.Models;
+using WebShopExcercise.Core.ViewModels;
 
 namespace WebShopExcercise.Services
 {
-    public class BasketService
+    public class BasketService : IBasketService
     {
         IRepository<Product> productContext;
         IRepository<Basket> basketContext;
@@ -128,6 +129,47 @@ namespace WebShopExcercise.Services
                 }
                 basketContext.Commit();
             }
+        }
+
+        public List<BasketItemViewModel> GetBasketItems(HttpContextBase httpContext)
+        {
+            Basket basket = GetBasket(httpContext, false);
+            List<BasketItemViewModel> result = new List<BasketItemViewModel>();
+            if (basket != null)
+            {
+                result = (from b in basket.BasketItems
+                              join p in productContext.Collection() on b.ProductId equals p.Id
+                              select new BasketItemViewModel()
+                              {
+                                  Id = b.Id,
+                                  Quantity = b.Quantity,
+                                  ProductName = p.Name,
+                                  Image = p.Image,
+                                  Price = p.Price
+                              }).ToList();
+            }
+
+            return result;
+        }
+
+        public BasketSummaryViewModel GetBasketSummary(HttpContextBase httpContext)
+        {
+            Basket basket = GetBasket(httpContext, false);
+            BasketSummaryViewModel viewmodel = new BasketSummaryViewModel(0, decimal.Zero);
+
+            if(basket != null)
+            {
+                int? basketCount = (from item in basket.BasketItems
+                                    select item.Quantity).Sum();
+                decimal? basketTotal = (from item in basket.BasketItems
+                                        join p in productContext.Collection() on item.ProductId equals p.Id
+                                        select item.Quantity * p.Price).Sum();
+                viewmodel.BasketCount = basketCount ?? 0;
+                viewmodel.BasketValue = basketTotal ?? decimal.Zero;
+                                    
+            }
+
+            return viewmodel;
         }
     }
 }
