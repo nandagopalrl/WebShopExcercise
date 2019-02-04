@@ -6,6 +6,7 @@ using WebShopExcercise.Core.Models;
 using WebShopExcercise.Core.Contracts;
 using WebShopExcercise.DataAccess.InMemory;
 using WebShopExcercise.DataAccess.SQL;
+using WebShopExcercise.Services;
 
 namespace WebShopExcercise.WebUI
 {
@@ -51,6 +52,9 @@ namespace WebShopExcercise.WebUI
             //container.RegisterType<IRepository<ProductCategory>, InMemoryRepository<ProductCategory>>();
             container.RegisterType<IRepository<Product>, SQLRepository<Product>>();
             container.RegisterType<IRepository<ProductCategory>, SQLRepository<ProductCategory>>();
+            container.RegisterType<IRepository<Basket>, SQLRepository<Basket>>();
+            container.RegisterType<IRepository<BasketItem>, SQLRepository<BasketItem>>();
+            container.RegisterType<IBasketService, BasketService>();
         }
     }
 }
